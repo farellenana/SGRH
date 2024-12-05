@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+  <div
+    class="card shadow bg-light d-flex flex-row w-100"
+    style="max-width: 1200px"
+  >
+    <div
+      class="image-section"
+      style="
+        background-image: url('assets/images/illustration1.webp');
+        background-size: cover;
+        background-position: center;
+        width: 50%;
+        height: 400px;
+      "
+    ></div>
+    <div class="filters p-4 flex-grow-1">
+      <h1 class="text-center">
+        Indications <i class="mdi mdi-audio-input-xlr"></i> Utilisateurs
+      </h1>
+      <div class="call-to-action text-primary text-center mb-3">
+        Filtrez ci-dessous pour afficher la liste du personnel !
+      </div>
+
+      <div class="form-group">
+        <label for="organisation" class="text-bold"
+          ><Strong>Organisation:</Strong></label
+        >
+        <div class="col-md-9 mb-4">
+          <p-dropdown
+            id="organisation"
+            [options]="organisations"
+            placeholder="Sélectionner"
+            [(ngModel)]="selectedOrganisation"
+            [editable]="true"
+            optionLabel="libelleFr"
+            [showClear]="true"
+            (onChange)="onOrganisationChange()"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div class="form-group mb-4">
+        <label for="structure"><strong>Structure:</strong></label>
+        <div>
+          <p-dropdown
+            id="structure"
+            [options]="structures"
+            [(ngModel)]="selectedStructure"
+            placeholder="Sélectionner"
+            [editable]="true"
+            optionLabel="libelleFr"
+            [showClear]="true"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div class="form-group mb-4">
+        <label for="exercice"><strong>Exercice</strong></label>
+        <div>
+          <p-dropdown
+            id="exercice"
+            [options]="exercices"
+            [(ngModel)]="selectedExercice"
+            placeholder="Sélectionner"
+            [editable]="true"
+            optionLabel="libelleFr"
+            [showClear]="true"
+          ></p-dropdown>
+        </div>
+      </div>
+
+      <div class="text-end">
+        <!-- Alignement à droite -->
+        <a (click)="navigateToUserList()"  class="btn btn-success btn-sm me-2">Accéder</a>
+        <a href="/annuler" class="btn btn-danger btn-sm">Annuler</a>
+        <!-- Nouveau bouton -->
+      </div>
+    </div>
+  </div>
+</div>

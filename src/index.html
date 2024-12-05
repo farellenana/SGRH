@@ -1,13 +1,79 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Grh</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Grh</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <!-- <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    /> -->
+  </head>
+  <body>
+    <app-root>
+      <script>
+        let currentTab = 0; // Index of the current tab
+
+        function changeTab(n) {
+          const tabs = document.querySelectorAll(".tab-pane");
+          if (n === 1 && currentTab < tabs.length - 1) {
+            tabs[currentTab].classList.remove("show", "active");
+            currentTab++;
+            tabs[currentTab].classList.add("show", "active");
+          } else if (n === -1 && currentTab > 0) {
+            tabs[currentTab].classList.remove("show", "active");
+            currentTab--;
+            tabs[currentTab].classList.add("show", "active");
+          }
+          updateButtons();
+          updateTabSelection();
+          resetFormFields();
+        }
+
+        function updateButtons() {
+          document.getElementById("prevBtn").style.display =
+            currentTab === 0 ? "none" : "inline-block";
+          document.getElementById("nextBtn").style.display =
+            currentTab === document.querySelectorAll(".tab-pane").length - 1
+              ? "none"
+              : "inline-block";
+        }
+
+        function updateTabSelection() {
+          const tabButtons = document.querySelectorAll(".nav-link");
+          tabButtons.forEach((button, index) => {
+            button.classList.remove("active");
+            if (index === currentTab) {
+              button.classList.add("active");
+            }
+          });
+        }
+
+        function resetFormFields() {
+          const tabs = document.querySelectorAll(".tab-pane");
+          tabs.forEach((tab, index) => {
+            if (index !== currentTab) {
+              const inputs = tab.querySelectorAll("input, select");
+              inputs.forEach((input) => {
+                if (input.type === "checkbox" || input.type === "radio") {
+                  input.checked = false;
+                } else {
+                  input.value = "";
+                }
+              });
+            }
+          });
+        }
+
+        function closeForm() {
+          // Logique pour fermer le formulaire (par exemple, rediriger ou masquer)
+          alert("Formulaire fermé");
+        }
+
+        // Initialize button visibility
+      </script>
+    </app-root>
+  </body>
 </html>

@@ -1,1 +1,53 @@
-/* You can add global styles to this file, and also import other style files */
+// Définition des variables
+$background-color: #f8f9fa;
+$active-bg-color: rgba(0, 123, 255, 0.2);
+$hover-bg-color: rgba(0, 86, 179, 0.2);
+$text-color: #000;
+$border-radius: 0.25rem;
+$hover-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+// Styles globaux
+h3 i {
+  color: blue;
+  font-weight: bold;
+}
+
+.tab {
+  margin-bottom: 100px;
+}
+
+// Styles des onglets
+.nav-tabs {
+  border-bottom: none; // Enlever le trait en dessous des onglets
+  margin-bottom: 100px;
+
+  .custom-tab {
+    border-radius: $border-radius;
+    transition: background-color 0.3s, color 0.3s;
+    border: none; // Enlever les bordures par défaut
+    margin-right: 1rem; // Ajouter de l'écart entre les onglets
+
+    &.active {
+      background-color: $active-bg-color; // Couleur de fond de l'onglet actif
+      color: $text-color; // Couleur du texte en noir
+      font-weight: bold;
+      border-radius: 15px; // Bordures arrondies
+      box-shadow: $hover-box-shadow; // Ajouter un léger ombrage
+    }
+
+    &:hover {
+      background-color: $hover-bg-color; // Couleur de fond lors du survol
+      color: $text-color; // Couleur du texte en noir lors du survol
+    }
+  }
+}
+
+// Styles pour le formulaire de téléchargement
+#singleFileUpload {
+  border: 2px dashed #007bff; // Bordures interrompues
+  background-color: $background-color; // Couleur de fond claire
+
+  &:hover {
+    background-color: #e2e6ea; // Couleur de fond au survol
+  }
+}

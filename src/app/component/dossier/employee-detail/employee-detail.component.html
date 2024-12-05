@@ -1,0 +1,610 @@
+<!-- <app-nav></app-nav> -->
+
+<p-toolbar styleClass="mb-4 gap-2">
+  <ng-template pTemplate="left">
+    <div class="d-flex justify-content-start mb-3">
+      <button class="btn fs-2" aria-label="Fermer" (click)="goBack()">
+        <i class="bi bi-x-circle text-danger"></i>
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="right">
+    <button pButton pRipple label="Exporter" icon="pi pi-upload" class="p-button-help m-2"></button>
+    <button class="btn btn-success m-2" (click)="navigateToEdit(employe.employeID)">
+      <i class="bi bi-pencil-square"></i> Modifier
+    </button>
+  </ng-template>
+</p-toolbar>
+
+<div *ngIf="employe" class="container-fluid w-80 mt-5">
+  <div class="row">
+    <div class="col-md-3">
+      <!-- Section fixe à gauche pour la photo de profil et les informations de base -->
+      <div class="card mb-4 shadow bg-secondary">
+        <div class="card-body text-center">
+
+          <img [src]="
+              employe.profilePhotoFile || 'assets/images/profile2.png'
+            " class="img-fluid rounded-circle " alt="Photo de Profil" width="100" />
+          <h5 class="card-title"></h5>
+          <h3 class="card-text text-white " >{{ employe.post }}</h3>
+        </div>
+      </div>
+      <div class="card shadow bg-dark text-white">
+        <div class="card-body">
+          <h4>Informations de Base</h4>
+          <table class="table table-dark table-borderless" style="background-color: transparent;">
+            <tbody>
+              <tr>
+                <th>Nom complet :</th>
+                <td>{{ employe.firstName }} {{ employe.lastName }}</td>
+              </tr>
+              <tr>
+                <th>Date de naissance :</th>
+                <td>{{ employe.birthdate | date:'d MMMM y' }}</td>
+              </tr>
+              <tr>
+                <th>Lieu de naissance:</th>
+                <td>{{ employe.birthPlace }}</td>
+              </tr>
+              <tr>
+                <th>Sexe:</th>
+                <td>{{ employe.gender }}</td>
+              </tr>
+              <tr>
+                <th>Nationalité:</th>
+                <td>{{ employe.nationality }}</td>
+              </tr>
+              <tr>
+                <th>État civil:</th>
+                <td>{{ employe.maritalStatus }}</td>
+              </tr>
+              <tr>
+                <th>Nombre d'enfants:</th>
+                <td>{{ employe.children }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- autre flottant -->
+      <div class="card shadow bg-dark text-white mt-3">
+        <div class="card-body">
+          <h4 >Informations sur le poste</h4>
+          <table class="table table-dark table-borderless ">
+            <tbody>
+              <tr>
+                <th>Matricule de l'employé :</th>
+                <td>{{ employe.matricule }}</td>
+              </tr>
+              <tr>
+                <th>Département:</th>
+                <td>{{ employe.department }}</td>
+              </tr>
+              <tr>
+                <th>Date d'embauche :</th>
+                <td>{{ employe.hireDate | date:'d MMMM y'  }}</td>
+              </tr>
+              <tr>
+                <th>Poste actuel</th>
+                <td>{{ employe.post }}</td>
+              </tr>
+
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <ul class="nav nav-tabs tab mb-5" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active custom-tab" id="personal-info-tab" data-bs-toggle="tab"
+            data-bs-target="#personal-info" type="button" role="tab" aria-controls="personal-info" aria-selected="true">
+            <i class="bi bi-person-circle"></i> Informations Personnelles
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link custom-tab" id="education-tab" data-bs-toggle="tab" data-bs-target="#education"
+            type="button" role="tab" aria-controls="education" aria-selected="false">
+            <i class="bi bi-book"></i> Parcours
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link custom-tab" id="professional-info-tab" data-bs-toggle="tab"
+            data-bs-target="#professional-info" type="button" role="tab" aria-controls="professional-info"
+            aria-selected="false">
+            <i class="bi bi-building"></i> Experiences
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link custom-tab" id="evaluation-info-tab" data-bs-toggle="tab"
+            data-bs-target="#evaluation-info" type="button" role="tab" aria-controls="evaluation-info"
+            aria-selected="false">
+            <i class="bi bi-graph-up"></i> Evaluation et Formation
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link custom-tab" id="congés-info-tab" data-bs-toggle="tab" data-bs-target="#congés-info"
+            type="button" role="tab" aria-controls="congés-info" aria-selected="false">
+            <i class="bi bi-calendar-check"></i> Congés
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link custom-tab" id="discipline-info-tab" data-bs-toggle="tab"
+            data-bs-target="#discipline-info" type="button" role="tab" aria-controls="discipline -info"
+            aria-selected="false">
+            <i class="bi bi-building"></i> discipline
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link custom-tab" id="assurance-info-tab" data-bs-toggle="tab"
+            data-bs-target="#assurance-info" type="button" role="tab" aria-controls="assurance-info"
+            aria-selected="false">
+            <i class="bi bi-shield-check"></i> Assurance
+          </button>
+        </li>
+      </ul>
+      <br />
+      <div class="tab-content" id="myTabContent" >
+        <div class="tab-pane fade show active" id="personal-info" role="tabpanel" aria-labelledby="personal-info-tab">
+          <div class="row mb-4">
+            <div class="col-md-6 mb-3">
+              <div class="card shadow" scrollable="true" scrollHeight="400px">
+                <div class="card-header bg-primary text-light fw-bold">
+                  <i class="bi bi-person-circle"></i>
+                   Coordonnées et Contact d'urgence
+                </div>
+
+                <div class="card-body">
+                  <div class="row">
+
+                    <table class="table table-borderless ">
+                      <tbody>
+                        <tr>
+                          <th>Adresse</th>
+                          <td>{{ employe.address }}</td>
+                        </tr>
+                        <tr>
+                          <th>Email</th>
+                          <td>{{ employe.email }}</td>
+                        </tr>
+                        <tr>
+                          <th>Téléphone</th>
+                          <td>{{ employe.phone }}</td>
+                        </tr>
+                        <tr>
+                          <th>Nom contact d'urgence</th>
+                          <td>{{ employe.emergencyContactName }}</td>
+                        </tr>
+                        <tr>
+                          <th>relation avec l'employé</th>
+                          <td>{{ employe.relationship }}</td>
+                        </tr>
+                        <tr>
+                          <th>adresse contact d'urgence</th>
+                          <td>{{ employe.emergencyContactAddress }}</td>
+                        </tr>
+                        <tr>
+                          <th>numero de telephone contact d'urgence</th>
+                          <td>{{ employe.emergencyContactPhone }}</td>
+                        </tr>
+                        <tr></tr>
+                      </tbody>
+                    </table>
+
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- autre -->
+            <div class="col-md-6 mb-3">
+              <div class="card shadow">
+                <div class="card-header bg-primary text-light fw-bold">
+                  <i class="bi bi-building  "></i>
+                  Informations Professionnelles
+                </div>
+
+                <div class="card-body">
+                  <div class="row">
+                    <table class="table table-borderless">
+                      <tbody>
+
+
+                        <tr>
+                          <th>Manager/Superviseur direct</th>
+                          <td>M. Martin</td>
+                        </tr>
+                        <tr>
+                          <th>Type de contrat</th>
+                          <td>CDI</td>
+                        </tr>
+                        <tr>
+                          <th>Salaire de base</th>
+                          <td>45,000 €</td>
+                        </tr>
+                        <tr>
+                          <th>Bonus et primes</th>
+                          <td>5,000 €</td>
+                        </tr>
+                        <tr>
+                          <th>Évaluations de performance</th>
+                          <td>Excellent</td>
+                        </tr>
+                        <tr>
+                          <th>Promotions et augmentations de salaire</th>
+                          <td>Promotion à Développeur Senior en 2022</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 mb-3 ">
+            <div class="card shadow ">
+              <div class="card-header bg-primary text-light fw-bold">
+                <i class="bi bi-paperclip"></i>
+                Pieces jointes
+              </div>
+              <h3 class="p-2">Documents de l'employé</h3>
+              <p-table [value]="documents" *ngIf="documents.length" class="p-3">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Nom</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>lien</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-docu>
+                  <tr>
+                    <td>{{ docu.nom }}</td>
+                    <td>{{ docu.date  | date:'d MMMM y' }}</td>
+                    <td>{{ docu.type }}</td>
+                    <td>{{ docu.description }}</td>
+                    <td>{{ docu.file }}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+              <div *ngIf="documents.length === 0" class="alert alert-warning text-center mb-3">
+                Aucun document Enregistré pour le moment
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
+          <div class="row mb-4">
+            <div class="col-md-12 mb-3">
+              <div class="card shadow">
+                <div class="card-header bg-primary text-light fw-bold">
+                  <i class="bi bi-book"></i> Parcour académique
+                </div>
+                <div class="card-body">
+                  <p-table [value]="academicBackground" *ngIf="academicBackground.length">
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th>Niveau d'Études</th>
+                        <th>Domaine d'Études</th>
+                        <th>Établissement</th>
+                        <th>Dates d'Études</th>
+                        <th>Diplômes Obtenus</th>
+                        <th>Certifications Supplémentaires</th>
+                        <th>Actions</th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-acad let-i="rowIndex">
+                      <tr>
+                        <td>{{ acad.level }}</td>
+                        <td>{{ acad.fieldOfStudy }}</td>
+                        <td>{{ acad.institution }}</td>
+                        <td>{{ acad.studyDate | date:'d MMMM y'  }}</td>
+                        <td>{{ acad.degreeObtend }}</td>
+                        <td>{{ acad.additionnalCertifications }}</td>
+                        <td>
+                          <button pButton type="button" icon="pi pi-trash" class="ui-button-danger"></button>
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                  <div *ngIf="academicBackground.length === 0" class="alert alert-warning text-center mb-3">
+                    Aucun parcour académique enregistré pour le moment
+                  </div>
+                </div>
+              </div><br>
+
+            </div>
+          </div>
+          <div class="col-md-12 mb-3">
+            <div class="card shadow">
+              <div class="card-header bg-primary text-light fw-bold">
+                <i class="bi bi-book"></i> Parcour Professionel
+              </div>
+              <div class="card-body">
+                <h3></h3>
+                <p-table [value]="professionalBackground" *ngIf="professionalBackground.length">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>Poste Occupé</th>
+                      <th>Entreprise</th>
+                      <th>Date d'Emploi</th>
+                      <th>Description des Responsabilités</th>
+                      <th>Réalisations Clés</th>
+                      <th>Actions</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-pro let-i="rowIndex">
+                    <tr>
+                      <td>{{ pro.position }}</td>
+                      <td>{{ pro.company }}</td>
+                      <td>{{ pro.employmentDate | date:'d MMMM y'  }}</td>
+                      <td>{{ pro.responsabilitiesDescription }}</td>
+                      <td>{{ pro.keyArchivement }}</td>
+                      <td>
+                        <button pButton type="button" icon="pi pi-trash" class="ui-button-danger"></button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+                <div *ngIf="professionalBackground.length === 0" class="alert alert-warning text-center mb-3">
+                  Aucun parcour professionnel enregistré pour le moment
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="professional-info" role="tabpanel" aria-labelledby="professional-info-tab">
+          <div class="row mb-4">
+            <div class="col-md-12 mb-3">
+              <div class="card shadow">
+                <div class="card-header bg-primary text-light">
+                  <i class="bi bi-building"></i> Experience
+                </div>
+                <br />
+                <div class="card-body">
+
+
+                  <br />
+                  <div class="mb-3">
+                    <h4>Historique des Postes Précédents</h4>
+                    <table class="table table-borderless">
+                      <thead>
+                        <tr>
+                          <th>Poste</th>
+                          <th>Entreprise</th>
+                          <th>Durée</th>
+                          <th>Responsabilités</th>
+                          <th>Réalisations</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Développeur Web</td>
+                          <td>Web Solutions Ltd</td>
+                          <td>Janvier 2018 - Décembre 2020</td>
+                          <td>Développement de sites web et applications</td>
+                          <td>
+                            Conception de 15 sites web et amélioration de
+                            l'expérience utilisateur
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Analyste Programmeur</td>
+                          <td>Tech Innovators Inc</td>
+                          <td>Janvier 2015 - Décembre 2017</td>
+                          <td>
+                            Analyse et programmation de solutions logicielles
+                          </td>
+                          <td>
+                            Implémentation de systèmes d'automatisation
+                            réduisant les coûts de 20%
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Stagiaire Développeur</td>
+                          <td>Startup XYZ</td>
+                          <td>Juillet 2014 - Décembre 2014</td>
+                          <td>
+                            Assistance au développement de projets logiciels
+                          </td>
+                          <td>
+                            Participation au développement d'une application
+                            mobile primée
+                            >
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="evaluation-info" role="tabpanel" aria-labelledby="evaluation-info-tab">
+          <div class="row mb-4">
+            <!-- evaluation -->
+            <div class="col-md-6 mb-3">
+              <div class="card shadow">
+                <div class="card-header bg-primary text-light font-weight-bold">
+                  <i class="bi bi-graph-up"></i>
+                  Evaluation
+                </div>
+                <div class="card-body">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Periode</th>
+                        <th>Évaluation</th>
+                        <th>Critere</th>
+                        <th>Commentaires</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Décembre 2022</td>
+                        <td>Excellent</td>
+                        <td>Très bonne performance, a dépassé les attentes</td>
+                      </tr>
+                      <tr>
+                        <td>stage pre-emploi</td>
+                        <td>essaie</td>
+                        <td>projet</td>
+                      </tr>
+                      <tr>
+                        <td>Décembre 2021</td>
+                        <td>Très bien</td>
+                        <td>Bon travail, objectif atteint</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                </div>
+              </div>
+            </div>
+
+
+            <!-- formation -->
+            <div class="col-md-6 mb-3">
+              <div class="card shadow">
+                <div class="card-header bg-primary text-light fw-bold">
+                  <i class="bi bi-journal"></i>
+                  Formation
+                </div>
+
+                <div class="card-body">
+
+                  <p><strong>Formations Suivies :</strong></p>
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>formation</th>
+                        <th>date</th>
+                        <th>lieux</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Gestion de Projet Agile</td>
+                        <td>Mars 2022</td>
+                        <td>Très bonne performance, a dépassé les attentes</td>
+                      </tr>
+                      <tr>
+                        <td>Sécurité des Applications Web</td>
+                        <td>Novembre 2021</td>
+                        <td>Bon travail, objectif atteint</td>
+                      </tr>
+                      <tr>
+                        <td>Développement Mobile</td>
+                        <td>Août 2021</td>
+                        <td>Bon travail, objectif atteint</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- congés -->
+        <div class="tab-pane fade" id="congés-info" role="tabpanel" aria-labelledby="congés-info-tab">
+          <div class="row  mb-4">
+            <div class="col-md-12 mb-3">
+            <div class="card shadow">
+              <div class="card-header bg-primary text-light fw-bold">
+                <i class="bi bi-calendar-check"></i> conges
+              </div>
+            <p class="p-3">
+              • Historique des promotions
+              • Historique des mutations
+              • Plan de carrière
+            </p>
+          </div>
+        </div>
+          </div>
+        </div>
+
+
+        <div class="tab-pane fade" id="discipline-info" role="tabpanel" aria-labelledby="discipline-info-tab">
+          <div class="row mb-4">
+            <div class="col-md-12 mb-3">
+              <div class="card shadow">
+                <div class="card-header bg-primary text-light font-weight-bold">
+                  <i class="bi bi-clock-history"></i>
+                  Discipline et Ancienneté
+                </div>
+
+                <div class="card-body">
+                  <div class="mb-3">
+                    <h4>Historique des sanctions disciplinaires</h4>
+                    <table class="table table-borderless">
+                      <tbody>
+                        <tr>
+                          <th>Date</th>
+                          <td>15 Mars 2023</td>
+                        </tr>
+                        <tr>
+                          <th>Motif</th>
+                          <td>Retard récurrent</td>
+                        </tr>
+                        <tr>
+                          <th>Sanction</th>
+                          <td>Avertissement écrit</td>
+                        </tr>
+                        <tr>
+                          <th>Commentaire</th>
+                          <td>Le collaborateur a promis de s'améliorer</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="mb-3">
+                    <h4>Actions correctives</h4>
+                    <ul>
+                      <li>
+                        Participation à un atelier sur la gestion du temps le 20
+                        Mars 2023
+                      </li>
+                      <li>
+                        Mise en place d'un suivi hebdomadaire avec le manager
+                        pour évaluer les progrès
+                      </li>
+                    </ul>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+         <!-- assurance -->
+         <div class="tab-pane fade" id="assurance-info" role="tabpanel" aria-labelledby="assurance-info-tab">
+          <div class="row  mb-4">
+            <div class="col-md-12 mb-3">
+            <div class="card shadow">
+              <div class="card-header bg-primary text-light fw-bold">
+                <i class="bi bi-shield-check"></i> Assurance
+              </div>
+              <h5 class="p-2">Listes des assurance</h5>
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+      <!-- .tab-content -->
+    </div>
+    <!-- .col-md-9 -->
+  </div>
+  <!-- .row -->
+</div>
+<!-- .container -->

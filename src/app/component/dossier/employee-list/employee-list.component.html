@@ -1,0 +1,136 @@
+
+
+<app-nav class="position-fixe"></app-nav>
+
+<div class="p-3">
+  <div class="row">
+    <h1 class="text-center text-primary">Dossier personnels</h1>
+  </div>
+  <br />
+
+  <div class="row mb-4">
+    <!-- Filtres -->
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="organisation" class="text-bold"><strong>Organisation:<span class="text-danger">*</span></strong></label>
+        <div>
+          <p-dropdown id="organisation" [options]="organisations" placeholder="Sélectionner"
+            [(ngModel)]="selectedOrganisation" [editable]="true" optionLabel="libelleFr" [showClear]="true"  class="form-control-lg"
+            (onChange)="onOrganisationChange()"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="structure"><strong>Structure:<span class="text-danger">*</span></strong></label>
+        <div>
+          <p-dropdown id="structure" [options]="structures" [(ngModel)]="selectedStructure" placeholder="Sélectionner"
+            [editable]="true" optionLabel="libelleFr" [showClear]="true"  class="form-control-lg" (onChange)="onFilterChange()"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="exercice"><strong>Exercice:<span class="text-danger">*</span></strong></label>
+        <div>
+          <p-dropdown id="exercice" [options]="exercices" [(ngModel)]="selectedExercice" placeholder="Sélectionner"
+            [editable]="true" optionLabel="libelleFr" [showClear]="true"  class="form-control-lg" (onChange)="onFilterChange()"></p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br /><br />
+
+  <!-- corp de la page  -->
+
+  <p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Rechercher" aria-label="Rechercher"
+          aria-describedby="search-icon" [(ngModel)]="searchQuery" (input)="onSearch()" />
+        <div class="input-group-append">
+          <span class="input-group-text" id="search-icon">
+            <i class="bi bi-search"></i>
+          </span>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        Le total est de
+        {{ filteredUsers ? filteredUsers.length : 0 }} employés.
+      </div>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <button pButton pRipple label="Exporter" icon="pi pi-upload" class="p-button-help"></button>
+      <a (click)="navigateAddForm()" class="btn">
+        <p-button label="Nouveau" icon="pi pi-plus" iconPos="left"></p-button>
+      </a>
+    </ng-template>
+  </p-toolbar>
+
+  <!-- Conteneur avec défilement vertical -->
+  <div class="row custom-table-container p-3" style="height: calc(100% - 150px)">
+    <div class="col ">
+      <p-table [value]="filteredUsers" [rows]="7" [paginator]="true"
+        [globalFilterFields]="['firstName', 'lastName', 'post']" [(selection)]="selectedUsers" [rowHover]="true"
+        dataKey="employeID" currentPageReportTemplate="Affichage {first} sur {last} des {totalRecords} Entrées"
+        [showCurrentPageReport]="true"  [scrollable]="true"  [tableStyle]="{
+          'min-width': '75rem',
+          'max-height': '400px',
+          'overflow-y': 'auto',
+          'border':'3',
+        }"
+        scrollHeight="400px">
+        <ng-template pTemplate="header" class="p-template-primary">
+          <tr>
+            <th>N</th>
+            <th>PHOTO</th>
+            <th pSortableColumn="matricule" style="min-width: 15rem">
+              MATRICULE<p-sortIcon field="matricule"></p-sortIcon>
+            </th>
+            <th pSortableColumn="firstName" style="min-width: 15rem">
+              NOM <p-sortIcon field="firstName"></p-sortIcon>
+            </th>
+            <th pSortableColumn="post" style="min-width: 10rem">
+              POSTE <p-sortIcon field="post"></p-sortIcon>
+            </th>
+            <th>ACTION</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-user let-i="rowIndex">
+          <tr [routerLink]="['/userDetail', user.employeID, organisationId]" style="cursor: pointer;">
+            <td class="fw-bold"  > {{ i + 1 }}</td>
+            <td>
+              <img [src]="user.profilePhotoFile || 'assets/images/profile2.png'" alt="Image de {{ user.firstName }}"
+                width="50" class="shadow-4" />
+            </td>
+            <td>{{ user.matricule}}</td>
+            <td>{{ user.firstName }} {{ user.lastName }}</td>
+            <td>{{ user.post }}</td>
+            <td>
+
+              <button class="btn btn-primary m-2" [routerLink]="['/userDetail', user.employeID, organisationId]">
+                <i class="bi bi-eye"></i>
+              </button>
+              <button class="btn btn-success m-2" (click)="navigateToEdit(user.employeID)">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+
+
+              <button class="btn btn-danger m-2" (click)="deleteEmploye(user.employeID)">
+                <i class="bi bi-trash"></i>
+              </button>
+
+
+            </td>
+
+          </tr>
+        </ng-template>
+        <p-confirmDialog></p-confirmDialog>
+
+      </p-table>
+    </div>
+  </div>
+</div>

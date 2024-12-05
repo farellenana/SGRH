@@ -1,0 +1,630 @@
+<div class="container-fluid w-75 mt-5 shadow p-5">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="d-flex justify-content-start mb-3">
+        <button class="btn fs-2" aria-label="Fermer" (click)="goBack()">
+          <i class="bi bi-x-circle text-danger"></i>
+        </button>
+      </div>
+      <div class="card mb-3">
+        <div *ngIf="isEditMode" class="form-group text-center">
+          <label for="profilePhoto"></label>
+          <img [src]=" employe.profilePhotoFile || 'assets/images/profile2.png'" alt="Profile Photo"
+            class="img-thumbnail mb-2 rounded-circle" style="max-width: 150px" />
+          <input type="file" id="profilePhoto" (change)="onProfilePhotoSelected($event)" [(ngModel)]="employe.picture"
+            accept="image/*,.xlsx,.xls,.doc, .docx,.ppt,.pptx,.txt,application/pdf" hidden #fileInput />
+          <button type="button" class="btn position-absolute" style="bottom: 10px; right: 10px"
+            (click)="fileInput.click()">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <h3 class="card-text text-white " >{{ employe.firstName }}{{ employe.lastName }}</h3>
+        </div>
+        <div *ngIf="!isEditMode" class="form-group text-center">
+          <label for="profilePhoto"></label>
+          <img [src]="profilePhoto || 'assets/images/profile2.png'" alt="Profile Photo"
+            class="img-thumbnail mb-2 rounded-circle" style="max-width: 150px" />
+          <input type="file" id="profilePhoto" (change)="onProfilePhotoSelected($event)" [(ngModel)]="employe.picture"
+            name="" accept="image/*,.xlsx,.xls,.doc, .docx,.ppt,.pptx,.txt,application/pdf" hidden #fileInput />
+          <button type="button" class="btn position-absolute" style="bottom: 10px; right: 10px"
+            (click)="fileInput.click()">
+            <i class="bi bi-pencil"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <div *ngIf="isEditMode">
+        <h1 class="text-center text-primary mb-4">
+          Formulaire de modification de l'employé
+        </h1>
+      </div>
+      <div *ngIf="!isEditMode">
+        <h1 class="text-center text-primary mb-4">
+          Formulaire d'Ajout d'un employé
+        </h1>
+      </div>
+
+      <br /><br />
+      <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+        <div></div>
+        <ul class="nav nav-tabs mb-5" id="myTab" role="tablist">
+          <li class="nav-item">
+            <button class="nav-link active custom-tab" id="personal-info-tab" data-bs-toggle="tab"
+              data-bs-target="#personal-info" type="button" role="tab" aria-controls="personal-info"
+              aria-selected="true">
+              Informations Personnelles
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link custom-tab" id="contact-info-tab" data-bs-toggle="tab"
+              data-bs-target="#contact-info" type="button" role="tab" aria-controls="contact-info"
+              aria-selected="false">
+              Coordonnées
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link custom-tab" id="official-info-tab" data-bs-toggle="tab"
+              data-bs-target="#official-info" type="button" role="tab" aria-controls="official-info"
+              aria-selected="false">
+              Identifications Officielles
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link custom-tab" id="emergency-contact-tab" data-bs-toggle="tab"
+              data-bs-target="#emergency-contact" type="button" role="tab" aria-controls="emergency-contact"
+              aria-selected="false">
+              Contact d'Urgence
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link custom-tab" id="course-tab" data-bs-toggle="tab" data-bs-target="#course"
+              type="button" role="tabpanel" aria-controls="course" aria-selected="false">
+              Parcours
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link custom-tab" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents"
+              type="button" role="tab" aria-controls="documents" aria-selected="false">
+              Pieces jointes
+            </button>
+          </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+          <!-- Informations Personnelles -->
+          <div class="tab-pane fade show active" id="personal-info" role="tabpanel" aria-labelledby="personal-info-tab">
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="lastName">Nom:</label>
+                <input type="text" class="form-control mb-4" id="lastName" [(ngModel)]="employe.lastName"
+                  name="lastName" placeholder="Nom" required />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="firstName">Prénom:</label>
+                <input type="text" class="form-control mb-4" id="firstName" [(ngModel)]="employe.firstName"
+                  name="firstName" placeholder="Prénom" required />
+              </div>
+              <div class="form-group col-md-4">
+                <label for="birthdate">Date de naissance:</label>
+                <input type="date" class="form-control" id="birthdate" [(ngModel)]="employe.birthdate " name="birthdate"
+                  required />
+              </div>
+              <div class="form-group col-md-4">
+                <label for="birthPlace">Lieu de naissance:</label>
+                <input type="text" class="form-control mb-4" id="birthPlace" [(ngModel)]="employe.birthPlace"
+                  name="birthPlace" required />
+              </div>
+              <div class="form-group col-md-4">
+                <label for="gender">Sexe:</label>
+                <select class="form-control" id="gender" [(ngModel)]="employe.gender" name="gender" required>
+                  <option value="">Choisir...</option>
+                  <option value="masculin">Masculin</option>
+                  <option value="féminin">Féminin</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="nationality">Nationalité:</label>
+                <input type="text" class="form-control mb-4" id="nationality" [(ngModel)]="employe.nationality"
+                  name="nationality" required />
+              </div>
+              <div class="form-group col-md-4">
+                <label for="maritalStatus">Situation matrimoniale:</label>
+                <select class="form-control" id="maritalStatus" [(ngModel)]="employe.maritalStatus" name="maritalStatus"
+                  required>
+                  <option value="">Choisir...</option>
+                  <option value="célibataire">Célibataire</option>
+                  <option value="marié(e)">Marié(e)</option>
+                  <option value="divorcé(e)">Divorcé(e)</option>
+                  <option value="veuf(ve)">Veuf(ve)</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="children">Nombre d'enfants:</label>
+                <input type="number" class="form-control mb-4" id="children" [(ngModel)]="employe.children"
+                  name="children" min="0" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Coordonnées -->
+          <div class="tab-pane fade" id="contact-info" role="tabpanel" aria-labelledby="contact-info-tab">
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="address">Adresse:</label>
+                <input type="text" class="form-control mb-4" id="address" [(ngModel)]="employe.address" name="address"
+                  required />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="phone">Téléphone:</label>
+                <input type="text" class="form-control mb-4" id="phone" [(ngModel)]="employe.phone" name="phone"
+                  required />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control mb-4" id="email" [(ngModel)]="employe.email" name="email"
+                  required />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="hireDate">Date d'embauche:</label>
+                <input type="date" class="form-control mb-4" id="hireDate" [(ngModel)]="employe.hireDate"
+                  name="hireDate" required />
+              </div><br><hr><br>
+              <div class="form-group col-md-6">
+                <label for="positionLevel"> Poste:</label>
+                <input type="text" class="form-control mb-4" id="positionLevel" [(ngModel)]="employe.positionLevel"
+                  name="positionLevel" required />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="salary"> Salaire:</label>
+                <input type="text" class="form-control mb-4" id="salary" [(ngModel)]="employe.salary"
+                  name="salary" required />
+              </div>
+              <!-- <div class="form-group col-md-6">
+                <label for="skills"> Competence:</label>
+                <input type="text" class="form-control mb-4" id="skills" [(ngModel)]="employe.skills"
+                  name="skills" required />
+              </div> -->
+              <!-- <div class="form-group col-md-6">
+                <label for="benefits"> Avantage:</label>
+                <input type="text" class="form-control mb-4" id="benefits" [(ngModel)]="employe.benefits"
+                  name="benefits" required />
+              </div> -->
+            </div>
+          </div>
+
+          <!-- Identifications Officielles -->
+          <div class="tab-pane fade" id="official-info" role="tabpanel" aria-labelledby="official-info-tab">
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="socialSecurityNumber">Numéro de sécurité sociale:</label>
+                <input type="text" class="form-control mb-4" id="socialSecurityNumber"
+                  [(ngModel)]="employe.socialSecurityNumber" name="socialSecurityNumber" required />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="taxId">Identifiant fiscal</label>
+                <input type="text" class="form-control" id="taxId" [(ngModel)]="employe.taxId" name="taxId" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <h5 class="text-center">Détails de la carte d'identité</h5>
+              <br />
+              <div class="row ml-2">
+                <div class="form-group col-md-4">
+                  <label for="identificationCardNumber">Numéro</label>
+                  <input type="text" class="form-control mb-2" placeholder="Numéro"
+                    [(ngModel)]="employe.identificationCardNumber" name="identificationCardNumber" required />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="issueDate">Date de délivrance</label>
+                  <input type="date" class="form-control mb-2" [(ngModel)]="employe.issueDate" name="issueDate"
+                    required />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="expirationDate">Date d'expiration</label>
+                  <input type="date" class="form-control" [(ngModel)]="employe.expirationDate" name="expirationDate"
+                    required />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact d'Urgence -->
+          <div class="tab-pane fade" id="emergency-contact" role="tabpanel" aria-labelledby="emergency-contact-tab">
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="emergencyContactName">Nom du contact d'urgence:</label>
+                <input type="text" class="form-control mb-4" id="emergencyContactName"
+                  [(ngModel)]="employe.emergencyContactName" name="emergencyContactName" required />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="emergencyContactRelation">Relation avec le contact:</label>
+                <input type="text" class="form-control mb-4" id="emergencyContactRelation"
+                  [(ngModel)]="employe.relationship" name="emergencyContactRelation" required />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="emergencyContactPhone">Téléphone du contact d'urgence:</label>
+                <input type="text" class="form-control mb-4" id="emergencyContactPhone"
+                  [(ngModel)]="employe.emergencyContactPhone" name="emergencyContactPhone" required />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="emergencyContactAddress">Adresse du contact d'urgence:</label>
+                <input type="text" class="form-control mb-4" id="emergencyContactAddress"
+                  [(ngModel)]="employe.emergencyContactAddress" name="emergencyContactAddress" required />
+              </div>
+            </div>
+          </div>
+
+          <!-- parcours academique et professionnel -->
+          <div class="tab-pane fade" id="course" role="tabpanel" aria-labelledby="course-tab">
+            <h3>Parcour Academique</h3>
+            <br />
+            <!-- Message si aucun parcours académique enregistré -->
+            <div *ngIf="!academicBackground.length" class="alert alert-warning text-center">
+              Aucun parcour académique enregistré pour le moment.
+            </div>
+            <!-- Tableau des parcours académiques -->
+            <p-table [value]="academicBackground" *ngIf="academicBackground.length">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Niveau d'Études</th>
+                  <th>Domaine d'Études</th>
+                  <th>Établissement</th>
+                  <th>Dates d'Études</th>
+                  <th>Diplômes Obtenus</th>
+                  <th>Certifications Supplémentaires</th>
+                  <th>Actions</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-acad let-i="rowIndex">
+                <tr>
+                  <td>{{ acad.level }}</td>
+                  <td>{{ acad.fieldOfStudy }}</td>
+                  <td>{{ acad.institution }}</td>
+                  <td>{{ acad.studyDate | date:'d MMMM y' }}</td>
+                  <td>{{ acad.degreeObtend }}</td>
+                  <td>{{ acad.additionnalCertifications }}</td>
+                  <td>
+                    <button pButton type="button" icon="pi pi-trash" class="p-button-danger"
+                      (click)="removeAcademicBackground(i)"></button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+
+            <div class="mt-3">
+              <div class="d-flex justify-content-center mt-5">
+                <p-button icon="pi pi-plus" (click)="addAcademicBackground()" label="Ajouter un parcour académique"
+                  styleClass="p-button-primary" />
+              </div>
+
+              <p-dialog header="Ajouter un parcour académique" [(visible)]="academicDialogVisible" [modal]="true"
+                [style]="{ width: '50vw' }">
+                <div class="p-fluid">
+                  <div class="row mb-3">
+                    <div class="p-field col-md-6">
+                      <label for="level" class="font-semibold w-6rem"><strong>Niveau d'Études :</strong></label>
+                      <input pInputText id="level" type="text" pInputText [(ngModel)]="academic.level" name="level"
+                        class="p-inputtext p-component mb-3" placeholder="Niveau d'Études" />
+                    </div>
+                    <div class="p-field col-md-6">
+                      <label for="fieldOfStudy"><strong>Domaine d'Études :</strong></label>
+                      <input [(ngModel)]="academic.fieldOfStudy" name="fieldOfStudy"
+                        class="p-inputtext p-component mb-3" placeholder="Domaine d'Études" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="p-field col-md-6">
+                      <label for="institution"><strong>Établissement :</strong></label>
+                      <input [(ngModel)]="academic.institution" name="institution" class="p-inputtext p-component mb-3"
+                        placeholder="Établissement" />
+                    </div>
+                    <div class="p-field col-md-6">
+                      <label for="studyDates"><strong>Dates d'Études :</strong></label>
+                      <input [(ngModel)]="academic.studyDate" name="studyDates" type="text"
+                        class="form-controlp-inputtext p-component mb-3" placeholder="Dates d'Études" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="p-field col-md-6">
+                      <label for="degreesObtained"><strong>Diplômes Obtenus :</strong></label>
+                      <input [(ngModel)]="academic.degreeObtend" name="degreesObtained"
+                        class="p-inputtext p-component mb-3" placeholder="Diplômes Obtenus" />
+                    </div>
+                    <div class="p-field col-md-6">
+                      <label for="additionalCertifications"><strong>Certifications Supplémentaires :</strong></label>
+                      <input [(ngModel)]="academic.additionnalCertifications" name="additionalCertifications"
+                        class="p-inputtext p-component" placeholder="Certifications Supplémentaires" />
+                    </div>
+                  </div>
+                </div>
+                <p-footer>
+                  <button class="p-button-success" pButton type="button" label="Enregistrer" icon="pi pi-check"
+                    (click)="saveAcademicBackground()"></button>
+                  <button pButton type="button" label="Annuler" icon="pi pi-times" class="p-button-danger"
+                    (click)="academicDialogVisible = false"></button>
+                </p-footer>
+
+                <!-- <div class="flex justify-content-end gap-3">
+                  <div class="row">
+                    <div class="col-md-6 mr-5">
+                      <p-button
+                        label="Annuler"
+                        severity="secondary"
+                        styleClass="p-button-secondary"
+                        (onClick)="academicDialogVisible = false"
+                      />
+                    </div>
+                    <div class="col-md-6 ml-5">
+                      <p-button
+                        label="Enregistrer"
+                        styleClass="p-button-success"
+                        (click)="saveAcademicBackground()"
+                      />
+                    </div>
+                  </div>
+                </div> -->
+              </p-dialog>
+            </div>
+
+            <br /><br />
+            <hr />
+
+            <h3>Parcour Professionnel</h3>
+            <br />
+
+            <!-- Message à afficher si le tableau est vide -->
+            <div *ngIf="!professionalBackground.length" class="alert alert-warning text-center">
+              Aucun parcour professionnel enregistré pour le moment.
+            </div>
+
+            <!-- Tableau des parcours professionnels -->
+            <p-table [value]="professionalBackground" *ngIf="professionalBackground.length">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Poste Occupé</th>
+                  <th>Entreprise</th>
+                  <th>Date d'Emploi</th>
+                  <th>Description des Responsabilités</th>
+                  <th>Réalisations Clés</th>
+                  <th>Actions</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-pro let-i="rowIndex">
+                <tr>
+                  <td>{{ pro.position }}</td>
+                  <td>{{ pro.company }}</td>
+                  <td>{{ pro.employmentDate | date:'d MMMM y' }}</td>
+                  <td>{{ pro.responsabilitiesDescription }}</td>
+                  <td>{{ pro.keyArchivement }}</td>
+                  <td>
+                    <button pButton type="button" icon="pi pi-trash" class="p-button-danger"
+                      (click)="removeProfessionalBackground(i)"></button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+
+            <div class="d-flex justify-content-center mt-5">
+              <button pButton type="button" label="Ajouter un parcour Professionnel" icon="pi pi-plus"
+                class="ui-button-primary" (click)="addProfessionalBackground()"></button>
+            </div>
+            <!-- Liste des parcours professionnels -->
+            <p-dialog header="Ajouter un Parcours Professionnel" [(visible)]="professionalDialogVisible" [modal]="true"
+              class="bg-primary" [style]="{ width: '50vw' }">
+              <div class="p-fluid">
+                <div class="row">
+                  <div class="p-field col-md-6">
+                    <label for="position">Poste Occupé:</label>
+                    <input id="position" type="text" pInputText [(ngModel)]="professional.position"
+                      name="professionalPosition" class="p-inputtext p-component mb-3" />
+                  </div>
+                  <div class="p-field col-md-6">
+                    <label for="company">Entreprise:</label>
+                    <input id="company" type="text" pInputText [(ngModel)]="professional.company"
+                      name="professionalCompany" class="p-inputtext p-component" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="p-field col-md-6">
+                    <label for="employmentDates">Date d'Emploi:</label>
+                    <input id="employmentDates" type="date" pInputText [(ngModel)]="professional.employmentDate"
+                      name="employmentDates" class="p-inputtext p-component" />
+                  </div>
+                  <div class="p-field col-md-6">
+                    <label for="responsibilitiesDescription">Description des Responsabilités:</label>
+                    <textarea id="responsibilitiesDescription" pInputTextarea
+                      [(ngModel)]="professional.responsabilitiesDescription" name="responsibilitiesDescription"
+                      class="p-inputtextarea p-component"></textarea>
+                  </div>
+                </div>
+
+                <div class="p-field">
+                  <label for="keyAchievements">Réalisations Clés:</label>
+                  <textarea id="keyAchievements" pInputTextarea [(ngModel)]="professional.keyArchivement"
+                    name="keyAchievements" class="p-inputtextarea p-component"></textarea>
+                </div>
+              </div>
+              <p-footer>
+                <button class="p-button-success" pButton type="button" label="Enregistrer" icon="pi pi-check"
+                  (click)="saveProfessionalBackground()"></button>
+                <button pButton type="button" label="Annuler" icon="pi pi-times" class="p-button-danger"
+                  (click)="professionalDialogVisible = false"></button>
+              </p-footer>
+            </p-dialog>
+          </div>
+
+          <!-- pieces jointe -->
+          <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
+            <!-- <div class="dropzone border rounded p-4 text-center">
+              <div class="dz-message">
+                <i class="bi bi-cloud-upload display-4 text-primary"></i>
+                <h6 class="mb-0 mt-2">
+                  Déposez les fichiers ici ou cliquez pour télécharger.
+                </h6>
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary mt-3"
+                (click)="addForm()"
+              >
+                Importer
+              </button>
+            </div> -->
+
+            <div>
+              <div *ngIf="!documents.length" class="alert alert-warning text-center mb-3">
+                Aucun document Enregistré pour le moment
+              </div>
+
+              <p-table [value]="documents" *ngIf="documents.length">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Nom</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-docu>
+                  <tr>
+                    <td>{{ docu.nom }}</td>
+                    <td>{{ docu.date | date:'d MMMM y' }}</td>
+                    <td>{{ docu.type }}</td>
+                    <td>{{ docu.description }}</td>
+                    <td>
+                      <button pButton type="button" icon="pi pi-trash" class="p-button-danger"></button>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+
+              <!-- dialog -->
+              <div class="d-flex justify-content-center mt-5">
+                <p-button (click)="addDoc()" icon="pi pi-plus" label="Ajouter un document"
+                  styleClass="p-button-primary" />
+
+                <p-dialog header="Ajouter des documents" [(visible)]="visible" [style]="{ width: '35rem' }">
+                  <div class="row mb-3">
+                    <div class="form-group col-md-6">
+                      <label for="name" class="font-semibold w-6rem"><strong>Nom :</strong></label>
+                      <input pInputText id="name" class="flex-auto" autocomplete="off" [(ngModel)]="doc.nom" name="name"
+                        class="form-control" placeholder="Nom" />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="date"><strong>Date :</strong></label>
+                      <input [(ngModel)]="doc.date" name="date" type="date" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="form-group col-md-6">
+                      <label for="type"><strong>Type de document :</strong></label>
+                      <input [(ngModel)]="doc.type" name="type" class="form-control" placeholder="Type" />
+                    </div>
+                    <div class="form-group col-md-6 mb-3">
+                      <label for="file"><strong>Importer :</strong></label>
+                      <input type="file" id="fileInput" [(ngModel)]="doc.file" name="file"
+                        (change)="onFileSelected0($event)"
+                        accept="image/*,.xlsx,.xls,.doc, .docx,.ppt,.pptx,.txt,application/pdf" class="form-control" />
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="description"><strong>Description du document :</strong></label>
+                      <textarea class="form-control" placeholder="Description" [(ngModel)]="doc.description"
+                        name="description">
+                      </textarea>
+                    </div>
+                  </div>
+
+                  <p-footer>
+                    <button pButton type="button" label="Enregistrer" icon="pi pi-check" (click)="saveDoc()"></button>
+                    <button pButton type="button" label="Annuler" icon="pi pi-times" class="p-button-danger"
+                      (click)="visible = false"></button>
+                  </p-footer>
+
+                  <!-- <div class="flex justify-content-end gap-3">
+                    <div class="row">
+                      <div class="col-md-6 mr-5">
+                        <p-button
+                          label="Annuler"
+                          severity="secondary"
+                          styleClass="p-button-secondary"
+                          (onClick)="visible = false"
+                        />
+                      </div>
+                      <div class="col-md-6 ml-5">
+                        <p-button
+                          label="Enregistrer"
+                          styleClass="p-button-success"
+                          (click)="saveDoc()"
+                        />
+                      </div>
+                    </div>
+                  </div> -->
+                </p-dialog>
+              </div>
+
+              <!-- <p-button
+                label="Ajouter un document"
+                icon="pi pi-plus"
+                iconPos="left"
+                class="position: center"
+                (click)="addDoc()"
+              ></p-button> -->
+            </div>
+          </div>
+
+          <!-- navigation sur les pages -->
+
+          <br /><br /><br />
+          <div class="d-flex justify-content-between mt-4">
+            <button id="prevBtn" class="btn" type="button" onclick="changeTab(-1)" style="display: none">
+              <p-button label="Précédent" icon="pi pi-angle-double-left" iconPos="left"
+                styleClass="p-button-secondary"></p-button>
+            </button>
+            <div>
+              <button id="nextBtn" class="btn" type="button" onclick="changeTab(1)">
+                <p-button label="Suivant" icon="pi pi-angle-double-right" iconPos="right"
+                  styleClass="p-button-primary"></p-button>
+              </button>
+              <button class="btn btn-success m-2" type="submit" class="btn ms-2" id="validateBtn ">
+                <p-button label="Valider" icon="pi pi-check-circle" iconPos="right"
+                  styleClass="p-button-success"></p-button>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ========================= Modals ====================-->
+
+<!-- Modal success-->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">Succès</h5>
+        {{ isEditMode ? "Mettre à jour" : "Ajouter" }}
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <i class="pi pi-spin pi-verified text-center" style="color: green; font-size: 4       rem"></i>
+        <h2>MERCI</h2>
+        <span> L'employé a été ajouté avec succès !</span>
+      </div>
+      <div class="modal-footer">
+        <!-- <button
+          type="button"
+          class="btn btn-primary"
+          (click)="redirectToEmployeeList()"
+        >
+          Voir la liste des employés
+        </button> -->
+      </div>
+    </div>
+  </div>
+</div>

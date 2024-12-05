@@ -1,0 +1,20 @@
+.custom-table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+
+.custom-table img.user-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border: 2px solid #007bff;
+  padding: 3px;
+}
+
+.table-wrapper thead th {
+  position: sticky;
+  top: 0; /* Fixe l'en-tête en haut */
+  background-color: #343a40; /* Couleur de fond pour éviter qu'il soit transparent */
+  color: #fff; /* Couleur du texte */
+  z-index: 1; /* Assure que l'en-tête est au-dessus du reste */
+}

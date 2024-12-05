@@ -1,0 +1,446 @@
+<!-- <app-nav></app-nav>
+
+<div class="container mt-5">
+  <h1 class="text-center">Tableau de Bord - Gestion des Postes</h1>
+
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <button
+        class="nav-link active"
+        id="postes-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#postes"
+        role="tab"
+        aria-controls="postes"
+        aria-selected="true"
+      >
+        Postes
+      </button>
+    </li>
+    <li class="nav-item">
+      <button
+        class="nav-link"
+        id="affectations-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#affectations"
+        role="tab"
+        aria-controls="affectations"
+        aria-selected="false"
+      >
+        Dernières Affectations
+      </button>
+    </li>
+  </ul>
+
+
+  <div class="tab-content" id="myTabContent">
+
+    <div
+      class="tab-pane fade show active"
+      id="postes"
+      role="tabpanel"
+      aria-labelledby="postes-tab"
+    >
+      <ul class="nav nav-tabs mt-3" id="postesSubTab" role="tablist">
+        <li class="nav-item">
+          <button
+            class="nav-link active"
+            data-bs-toggle="tab"
+            data-bs-target="#poste1"
+            role="tab"
+          >
+            Développeur
+          </button>
+        </li>
+        <li class="nav-item">
+          <button
+            class="nav-link"
+            data-bs-toggle="tab"
+            data-bs-target="#poste2"
+            role="tab"
+          >
+            Analyste
+          </button>
+        </li>
+        <li class="nav-item">
+          <button
+            class="nav-link"
+            data-bs-toggle="tab"
+            data-bs-target="#poste3"
+            role="tab"
+          >
+            Chef de Projet
+          </button>
+        </li>
+      </ul>
+
+
+      <div class="tab-content" id="postesSubTabContent">
+        <div class="tab-pane fade show active" id="poste1" role="tabpanel">
+          <div class="card mt-3">
+            <div class="card-header">Développeurs Affectés</div>
+            <div class="card-body">
+              <button
+                class="btn btn-primary mb-3"
+                data-bs-toggle="modal"
+                data-bs-target="#addAffectationModal"
+              >
+                Ajouter un Employé
+              </button>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Nom de l'Employé</th>
+                    <th>Date d'Affectation</th>
+                    <th>Actions</th>
+                  </tr>.tab {
+  margin-bottom: 100px;
+}
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Jean Dupont</td>
+                    <td>01/11/2024</td>
+                    <td>
+                      <button class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i> Modifier
+                      </button>
+                      <button class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Supprimer
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Lucie Martin</td>
+                    <td>05/11/2024</td>
+                    <td>
+                      <button class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i> Modifier
+                      </button>
+                      <button class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Supprimer
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="poste2" role="tabpanel">
+          <div class="card mt-3">
+            <div class="card-header">Analystes Affectés</div>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Nom de l'Employé</th>
+                    <th>Date d'Affectation</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Marie Curie</td>
+                    <td>02/11/2024</td>
+                    <td>
+                      <button class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i> Modifier
+                      </button>
+                      <button class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Supprimer
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Paul Durand</td>
+                    <td>10/11/2024</td>
+                    <td>
+                      <button class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i> Modifier
+                      </button>
+                      <button class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Supprimer
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="poste3" role="tabpanel">
+          <div class="card mt-3">
+            <div class="card-header">Chefs de Projet Affectés</div>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Nom de l'Employé</th>
+                    <th>Date d'Affectation</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Pierre Martin</td>
+                    <td>03/11/2024</td>
+                    <td>
+                      <button class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i> Modifier
+                      </button>
+                      <button class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Supprimer
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Sophie Lemoine</td>
+                    <td>15/11/2024</td>
+                    <td>
+                      <button class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i> Modifier
+                      </button>
+                      <button class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Supprimer
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div
+      class="tab-pane fade"
+      id="affectations"
+      role="tabpanel"
+      aria-labelledby="affectations-tab"
+    >
+      <div class="card mt-3">
+        <div class="card-header">Dernières Affectations</div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Nom de l'Employé</th>
+                <th>Poste</th>
+                <th>Date d'Affectation</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Jean Dupont</td>
+                <td>Développeur</td>
+                <td>01/11/2024</td>
+                <td>
+                  <button class="btn btn-warning btn-sm">
+                    <i class="bi bi-pencil"></i> Modifier
+                  </button>
+                  <button class="btn btn-danger btn-sm">
+                    <i class="bi bi-trash"></i> Supprimer
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Marie Curie</td>
+                <td>Analyste</td>
+                <td>02/11/2024</td>
+                <td>
+                  <button class="btn btn-warning btn-sm">
+                    <i class="bi bi-pencil"></i> Modifier
+                  </button>
+                  <button class="btn btn-danger btn-sm">
+                    <i class="bi bi-trash"></i> Supprimer
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Pierre Martin</td>
+                <td>Chef de Projet</td>
+                <td>03/11/2024</td>
+                <td>
+                  <button class="btn btn-warning btn-sm">
+                    <i class="bi bi-pencil"></i> Modifier
+                  </button>
+                  <button class="btn btn-danger btn-sm">
+                    <i class="bi bi-trash"></i> Supprimer
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div
+    class="modal fade"
+    id="addAffectationModal"
+    tabindex="-1"
+    aria-labelledby="addAffectationModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addAffectationModalLabel">
+            Ajouter une Affectation
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="employeName" class="form-label"
+                >Nom de l'Employé</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="employeName"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="posteSelect" class="form-label">Poste</label>
+              <select class="form-select" id="posteSelect" required>
+                <option value="">Sélectionnez un poste</option>
+                <option value="developeur">Développeur</option>
+                <option value="analyste">Analyste</option>
+                <option value="chef_projet">Chef de Projet</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="dateAffectation" class="form-label"
+                >Date d'Affectation</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                id="dateAffectation"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="container">
+  <h1 class="text-center mt-4">Tableau de Bord - Gestion des Postes</h1>
+
+  <div class="row">
+    <!-- Sidebar avec les cartes -->
+    <div class="col-md-3 sidebar">
+      <div class="card mb-3 card-clickable" (click)="showSection('poste')">
+        <div class="card-body text-center">
+          <h6 class="card-title">Poste</h6>
+        </div>
+      </div>
+      <div
+        class="card mb-3 card-clickable"
+        (click)="showSection('affectation')"
+      >
+        <div class="card-body text-center">
+          <h6 class="card-title">Affectation</h6>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenu des sections à droite -->
+    <div class="col-md-9 content">
+      <!-- Section Poste -->
+      <div *ngIf="currentSection === 'poste'" class="section">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h4>Postes Disponibles</h4>
+                <ul>
+                  <li>Développeur</li>
+                  <li>Chef de Projet</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h4>Postes Vacants</h4>
+                <ul>
+                  <li>Analyste</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Affectation -->
+      <div *ngIf="currentSection === 'affectation'" class="section">
+        <h4>Employés Affectés</h4>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nom de l'Employé</th>
+              <th>Poste</th>
+              <th>Date d'Affectation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Jean Dupont</td>
+              <td>Développeur</td>
+              <td>01/11/2024</td>
+            </tr>
+            <tr>
+              <td>Marie Curie</td>
+              <td>Analyste</td>
+              <td>05/11/2024</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>Dernières Affectations</h4>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nom de l'Employé</th>
+              <th>Poste d'Affectation</th>
+              <th>Date d'Affectation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Pierre Martin</td>
+              <td>Chef de Projet</td>
+              <td>03/11/2024</td>
+            </tr>
+            <tr>
+              <td>Lucie Lemoine</td>
+              <td>Développeur</td>
+              <td>10/11/2024</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
