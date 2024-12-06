@@ -30,6 +30,7 @@ export class AddUserComponent implements OnInit {
   academicBackground: AcademicBackground[] = [];
   professionalBackground: ProfessionalBackground[] = [];
   skills: string[] = [];
+  benefits: string[] = [];
   showForms: boolean[] = [];
   organisationId!: string;
   files: DocFile[] = [];
@@ -40,6 +41,8 @@ export class AddUserComponent implements OnInit {
   doc: Document = new Document();
   academic: AcademicBackground = new AcademicBackground();
   professional: ProfessionalBackground = new ProfessionalBackground();
+  skill: string = '';
+  benefit: string = '';
   visible: boolean = false;
   academicDialogVisible: boolean = false;
   professionalDialogVisible: boolean = false;
@@ -60,7 +63,7 @@ export class AddUserComponent implements OnInit {
       this.organisationId = params['organisationId'];
       console.log('Organisation ID:', this.organisationId);
 
-      const employeeId = params['employeeId']; // Get employeeId from query params
+      const employeeId = params['employeeId'];
 
       if (employeeId) {
         this.isEditMode = true;
@@ -68,6 +71,7 @@ export class AddUserComponent implements OnInit {
       }
     });
   }
+
   listDocumentByEmploye(employeID: string) {
     const fileType = '';
     this.apiRhService.listFichier(employeID, fileType).subscribe(
@@ -79,7 +83,6 @@ export class AddUserComponent implements OnInit {
         console.error('Error loading documents:', error);
       }
     );
-
   }
 
   listAcademicBackgroundByEmploye(employeID: string): void {
@@ -105,18 +108,11 @@ export class AddUserComponent implements OnInit {
     );
   }
 
-//   addSkill() {
-//     if (this.skills && !this.employe.skills.includes(this.skills)) {
-//         this.employe.skills.push(this.skills);
-//         this.skills = ''; // Réinitialiser le champ de saisie
-//     }
-// }
-
-  // modification
+  // caharger les information pour la modification
   loadEmployeeData(employeeId: string): void {
-    this.userService.getEmployeeById(employeeId, this.organisationId).subscribe( 
+    this.userService.getEmployeeById(employeeId, this.organisationId).subscribe(
       (employee) => {
-        console.log(employee)
+        console.log(employee);
         if (employee) {
           this.employe = employee[0];
           this.loadImageForEmploye(this.employe);
@@ -136,10 +132,9 @@ export class AddUserComponent implements OnInit {
     );
   }
 
-  loadImageForEmploye(employe: Employe):void {
-    console.log("je charges l'ima");
+  // charger l'image pour la modification
+  loadImageForEmploye(employe: Employe): void {
     console.log(this.employe);
-
     this.apiRhService.fichierDownload(employe.picture).subscribe(
       (blob: Blob) => {
         const reader = new FileReader();
@@ -155,7 +150,23 @@ export class AddUserComponent implements OnInit {
         );
       }
     );
+  }
 
+  // ajouter la liste des Competences
+  addSkill() {
+    this.skill = '';
+    if (this.skill) {
+      this.employe.skills.push(this.skill); // Ajoute la compétence
+      this.skill = '';
+    }
+  }
+
+  // ajouter la liste des avantages
+  addBenefit() {
+    if (this.benefit) {
+      this.employe.benefits.push(this.benefit);
+      this.benefit = '';
+    }
   }
 
   onSubmit(): void {
@@ -163,7 +174,8 @@ export class AddUserComponent implements OnInit {
     this.employe.organisationID = this.organisationId;
     this.employe.academicBackground = this.academicBackground;
     this.employe.professionalBackground = this.professionalBackground;
-    this.employe.skills=this.skills;
+    this.employe.skills = this.skills;
+    console.log('Compétences soumises:', this.skills);
     console.log("L'ajout de l'employé :", this.employe);
     if (this.isEditMode) {
       // Update employee
@@ -218,6 +230,20 @@ export class AddUserComponent implements OnInit {
     console.log(this.documents);
   }
 
+  editDocument(index: number) {
+    console.log('Editing document at index:', index);
+    const documentToEdit = this.documents[index];
+    console.log('Document data:', documentToEdit);
+    this.doc = Object.assign(new Document(), documentToEdit);
+    this.visible = true;
+  }
+
+  removeDocument(index: number) {
+    console.log('Before removal:', this.documents);
+    this.documents.splice(index, 1);
+    console.log('After removal:', this.documents);
+  }
+
   // AcademicBackground
 
   addAcademicBackground() {
@@ -229,6 +255,17 @@ export class AddUserComponent implements OnInit {
     console.log(this.academic);
     this.academicBackground.push(this.academic);
     this.academicDialogVisible = false;
+  }
+
+  editAcademicBackground(index: number) {
+    this.academic = { ...this.academicBackground[index] }; // Copie les données de l'élément sélectionné
+    this.academicDialogVisible = true; // Affiche le dialogue
+  }
+
+  removeAcademicBackground(index: number) {
+    console.log('Before removal:', this.academicBackground);
+    this.academicBackground.splice(index, 1);
+    console.log('After removal:', this.academicBackground);
   }
 
   // ProfessionalBackground
@@ -244,6 +281,17 @@ export class AddUserComponent implements OnInit {
     this.professionalDialogVisible = false;
   }
 
+  editProfessionalBackground(index: number) {
+    this.professional = { ...this.professionalBackground[index] }; // Copie les données de l'élément sélectionné
+    this.professionalDialogVisible = true; // Affiche le dialogue
+  }
+
+  removeProfessionalBackground(index: number) {
+    console.log('Before removal:', this.professionalBackground);
+    this.professionalBackground.splice(index, 1);
+    console.log('After removal:', this.professionalBackground);
+  }
+
   removeForm(index: number) {
     this.documents.splice(index, 1);
   }
@@ -255,20 +303,11 @@ export class AddUserComponent implements OnInit {
     }
   }
 
-  removeAcademicBackground(index: number) {
-    this.employe.academicBackground.splice(index, 1);
-    console.log('Removing index:', index);
-  }
-
-  removeProfessionalBackground(index: number) {
-    this.employe.professionalBackground.splice(index, 1);
-  }
-
   closeDialog() {
     this.visible = false;
   }
 
-  // -----------------------------file---------------------------
+  // ---------file------------
 
   onFileChange(event: any): void {
     const file = event.target.files[0];

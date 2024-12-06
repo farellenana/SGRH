@@ -1,5 +1,3 @@
-
-
 <app-nav class="position-fixe"></app-nav>
 
 <div class="p-3">
@@ -12,11 +10,12 @@
     <!-- Filtres -->
     <div class="col-md-4">
       <div class="form-group">
-        <label for="organisation" class="text-bold"><strong>Organisation:<span class="text-danger">*</span></strong></label>
+        <label for="organisation" class="text-bold"><strong>Organisation:<span
+              class="text-danger">*</span></strong></label>
         <div>
           <p-dropdown id="organisation" [options]="organisations" placeholder="Sélectionner"
-            [(ngModel)]="selectedOrganisation" [editable]="true" optionLabel="libelleFr" [showClear]="true"  class="form-control-lg"
-            (onChange)="onOrganisationChange()"></p-dropdown>
+            [(ngModel)]="selectedOrganisation" [editable]="true" optionLabel="libelleFr" [showClear]="true"
+            class="form-control-lg" (onChange)="onOrganisationChange()"></p-dropdown>
         </div>
       </div>
     </div>
@@ -25,7 +24,8 @@
         <label for="structure"><strong>Structure:<span class="text-danger">*</span></strong></label>
         <div>
           <p-dropdown id="structure" [options]="structures" [(ngModel)]="selectedStructure" placeholder="Sélectionner"
-            [editable]="true" optionLabel="libelleFr" [showClear]="true"  class="form-control-lg" (onChange)="onFilterChange()"></p-dropdown>
+            [editable]="true" optionLabel="libelleFr" [showClear]="true" class="form-control-lg"
+            (onChange)="onFilterChange()"></p-dropdown>
         </div>
       </div>
     </div>
@@ -34,7 +34,8 @@
         <label for="exercice"><strong>Exercice:<span class="text-danger">*</span></strong></label>
         <div>
           <p-dropdown id="exercice" [options]="exercices" [(ngModel)]="selectedExercice" placeholder="Sélectionner"
-            [editable]="true" optionLabel="libelleFr" [showClear]="true"  class="form-control-lg" (onChange)="onFilterChange()"></p-dropdown>
+            [editable]="true" optionLabel="libelleFr" [showClear]="true" class="form-control-lg"
+            (onChange)="onFilterChange()"></p-dropdown>
         </div>
       </div>
     </div>
@@ -42,7 +43,6 @@
   <br /><br />
 
   <!-- corp de la page  -->
-
   <p-toolbar styleClass="mb-4 gap-2">
     <ng-template pTemplate="left">
       <div class="input-group">
@@ -75,13 +75,12 @@
       <p-table [value]="filteredUsers" [rows]="7" [paginator]="true"
         [globalFilterFields]="['firstName', 'lastName', 'post']" [(selection)]="selectedUsers" [rowHover]="true"
         dataKey="employeID" currentPageReportTemplate="Affichage {first} sur {last} des {totalRecords} Entrées"
-        [showCurrentPageReport]="true"  [scrollable]="true"  [tableStyle]="{
+        [showCurrentPageReport]="true" [scrollable]="true" [tableStyle]="{
           'min-width': '75rem',
           'max-height': '400px',
           'overflow-y': 'auto',
           'border':'3',
-        }"
-        scrollHeight="400px">
+        }" scrollHeight="400px">
         <ng-template pTemplate="header" class="p-template-primary">
           <tr>
             <th>N</th>
@@ -98,10 +97,9 @@
             <th>ACTION</th>
           </tr>
         </ng-template>
-
         <ng-template pTemplate="body" let-user let-i="rowIndex">
           <tr [routerLink]="['/userDetail', user.employeID, organisationId]" style="cursor: pointer;">
-            <td class="fw-bold"  > {{ i + 1 }}</td>
+            <td class="fw-bold"> {{ i + 1 }}</td>
             <td>
               <img [src]="user.profilePhotoFile || 'assets/images/profile2.png'" alt="Image de {{ user.firstName }}"
                 width="50" class="shadow-4" />
@@ -117,13 +115,9 @@
               <button class="btn btn-success m-2" (click)="navigateToEdit(user.employeID)">
                 <i class="bi bi-pencil-square"></i>
               </button>
-
-
               <button class="btn btn-danger m-2" (click)="deleteEmploye(user.employeID)">
                 <i class="bi bi-trash"></i>
               </button>
-
-
             </td>
 
           </tr>

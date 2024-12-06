@@ -28,7 +28,7 @@ export class UserService {
     return this.http.get<Employe[]>(url);
   }
 
-  addEmployee(employee: Employe ): Observable<any> {
+  addEmployee(employee: Employe): Observable<any> {
     return this.http.post(this.apiUrl + `/insert`, employee);
   }
 
@@ -40,18 +40,25 @@ export class UserService {
     return this.http.delete<void>(`${this.apiUrl}/delete/${employeeId}`);
   }
 
-
   getDocumentsByEmployeeId(employeeId: string): Observable<Document[]> {
-    return this.http.get<Document[]>(this.apiUrl + `/rhemployedocument/list/documents?employeeId=${employeeId}`);
+    return this.http.get<Document[]>(
+      this.apiUrl + `/rhemployedocument/list/documents?employeeId=${employeeId}`
+    );
   }
 
-  getAcademicBackgroundByEmployeeId(employeeId: string): Observable<AcademicBackground[]> {
-    return this.http.get<AcademicBackground[]>(`/api/academic-background?employeeId=${employeeId}`);
+  getAcademicBackgroundByEmployeeId(
+    employeeId: string
+  ): Observable<AcademicBackground[]> {
+    return this.http.get<AcademicBackground[]>(
+      `/api/academic-background?employeeId=${employeeId}`
+    );
   }
 
-  getProfessionalBackgroundByEmployeeId(employeeId: string): Observable<ProfessionalBackground[]> {
-    return this.http.get<ProfessionalBackground[]>(`/api/professional-background?employeeId=${employeeId}`);
+  getProfessionalBackgroundByEmployeeId(
+    employeeId: string
+  ): Observable<ProfessionalBackground[]> {
+    return this.http.get<ProfessionalBackground[]>(
+      `/api/professional-background?employeeId=${employeeId}`
+    );
   }
-
-
 }

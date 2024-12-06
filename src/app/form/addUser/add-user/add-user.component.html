@@ -17,7 +17,7 @@
             (click)="fileInput.click()">
             <i class="bi bi-pencil"></i>
           </button>
-          <h3 class="card-text text-white " >{{ employe.firstName }}{{ employe.lastName }}</h3>
+          <h3 class="card-text text-white ">{{ employe.firstName }}{{ employe.lastName }}</h3>
         </div>
         <div *ngIf="!isEditMode" class="form-group text-center">
           <label for="profilePhoto"></label>
@@ -169,7 +169,8 @@
                 <label for="hireDate">Date d'embauche:</label>
                 <input type="date" class="form-control mb-4" id="hireDate" [(ngModel)]="employe.hireDate"
                   name="hireDate" required />
-              </div><br><hr><br>
+              </div><br>
+              <hr><br>
               <div class="form-group col-md-6">
                 <label for="positionLevel"> Poste:</label>
                 <input type="text" class="form-control mb-4" id="positionLevel" [(ngModel)]="employe.positionLevel"
@@ -177,19 +178,23 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="salary"> Salaire:</label>
-                <input type="text" class="form-control mb-4" id="salary" [(ngModel)]="employe.salary"
-                  name="salary" required />
+                <input type="text" class="form-control mb-4" id="salary" [(ngModel)]="employe.salary" name="salary"
+                  required />
               </div>
-              <!-- <div class="form-group col-md-6">
-                <label for="skills"> Competence:</label>
-                <input type="text" class="form-control mb-4" id="skills" [(ngModel)]="employe.skills"
-                  name="skills" required />
-              </div> -->
-              <!-- <div class="form-group col-md-6">
+              <div class="form-group col-md-6">
+                <label for="skills">Compétence :</label>
+                <input type="text" [(ngModel)]="skill" class="form-control mb-4" id="skill" name="skills" required />
+                <button type="button" class="btn btn-primary" (click)="addSkill()">Ajouter Compétence</button>
+              </div>
+
+              <ul>
+                <li *ngFor="let skill of employe.skills">{{ skill }}</li>
+              </ul>
+               <div class="form-group col-md-6">
                 <label for="benefits"> Avantage:</label>
-                <input type="text" class="form-control mb-4" id="benefits" [(ngModel)]="employe.benefits"
+                <input type="text"  class="form-control mb-4" id="benefits" [(ngModel)]="employe.benefits"
                   name="benefits" required />
-              </div> -->
+              </div>
             </div>
           </div>
 
@@ -285,8 +290,18 @@
                   <td>{{ acad.degreeObtend }}</td>
                   <td>{{ acad.additionnalCertifications }}</td>
                   <td>
-                    <button pButton type="button" icon="pi pi-trash" class="p-button-danger"
-                      (click)="removeAcademicBackground(i)"></button>
+                    <div class="row">
+                    <div class="col-md-2 m-2">
+                      <button  type="button" class="btn text-success  fs-2"
+                      (click)="editAcademicBackground(i)"><i class="bi bi-pencil-square"></i></button>
+
+                    </div>
+                    <div class="col-md-2 m-2">
+                      <button type="button"  class="btn text-danger  fs-2"
+                      (click)="removeAcademicBackground(i)"> <i class="bi bi-trash"></i></button>
+                    </div>
+                  </div>
+
                   </td>
                 </tr>
               </ng-template>
@@ -398,8 +413,17 @@
                   <td>{{ pro.responsabilitiesDescription }}</td>
                   <td>{{ pro.keyArchivement }}</td>
                   <td>
-                    <button pButton type="button" icon="pi pi-trash" class="p-button-danger"
-                      (click)="removeProfessionalBackground(i)"></button>
+                    <div class="row">
+                      <div class="col-md-2 m-2">
+                        <button  type="button" class="btn text-success  fs-2"
+                        (click)="editProfessionalBackground(i)"><i class="bi bi-pencil-square"></i></button>
+
+                      </div>
+                      <div class="col-md-2 m-2">
+                        <button type="button"  class="btn text-danger  fs-2"
+                        (click)="removeProfessionalBackground(i)"> <i class="bi bi-trash"></i></button>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               </ng-template>
@@ -487,14 +511,24 @@
                     <th>Actions</th>
                   </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-docu>
+                <ng-template pTemplate="body" let-docu let-i="rowIndex">
                   <tr>
                     <td>{{ docu.nom }}</td>
                     <td>{{ docu.date | date:'d MMMM y' }}</td>
                     <td>{{ docu.type }}</td>
                     <td>{{ docu.description }}</td>
                     <td>
-                      <button pButton type="button" icon="pi pi-trash" class="p-button-danger"></button>
+                      <div class="row">
+                        <div class="col-md-2 =">
+                          <button  type="button" class="btn text-success  fs-2"
+                          (click)="editDocument(i)"><i class="bi bi-pencil-square"></i></button>
+                        </div>
+                        <div class="col-md-2 ">
+                          <button type="button"  class="btn text-danger  fs-2"
+                          (click)="removeDocument(i)"> <i class="bi bi-trash"></i></button>
+                        </div>
+                      </div>
+
                     </td>
                   </tr>
                 </ng-template>
@@ -538,40 +572,12 @@
                   </div>
 
                   <p-footer>
-                    <button pButton type="button" label="Enregistrer" icon="pi pi-check" (click)="saveDoc()"></button>
+                    <button pButton class="p-button-success" type="button" label="Enregistrer" icon="pi pi-check" (click)="saveDoc()"></button>
                     <button pButton type="button" label="Annuler" icon="pi pi-times" class="p-button-danger"
                       (click)="visible = false"></button>
                   </p-footer>
-
-                  <!-- <div class="flex justify-content-end gap-3">
-                    <div class="row">
-                      <div class="col-md-6 mr-5">
-                        <p-button
-                          label="Annuler"
-                          severity="secondary"
-                          styleClass="p-button-secondary"
-                          (onClick)="visible = false"
-                        />
-                      </div>
-                      <div class="col-md-6 ml-5">
-                        <p-button
-                          label="Enregistrer"
-                          styleClass="p-button-success"
-                          (click)="saveDoc()"
-                        />
-                      </div>
-                    </div>
-                  </div> -->
                 </p-dialog>
               </div>
-
-              <!-- <p-button
-                label="Ajouter un document"
-                icon="pi pi-plus"
-                iconPos="left"
-                class="position: center"
-                (click)="addDoc()"
-              ></p-button> -->
             </div>
           </div>
 
@@ -612,7 +618,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-center">
-        <i class="pi pi-spin pi-verified text-center" style="color: green; font-size: 4       rem"></i>
+        <i class="pi pi-spin pi-verified text-center" style="color: green; font-size: 4rem"></i>
         <h2>MERCI</h2>
         <span> L'employé a été ajouté avec succès !</span>
       </div>

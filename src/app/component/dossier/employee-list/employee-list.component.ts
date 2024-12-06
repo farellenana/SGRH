@@ -81,7 +81,6 @@ export class EmployeeListComponent implements OnInit {
       );
     });
   }
-  //----------------------------------------------------------------------
 
   loadEmployees(organisationId: string): void {
     this.loading = true;
@@ -100,14 +99,12 @@ export class EmployeeListComponent implements OnInit {
             this.loading = false;
           },
         });
-
       },
       error: (error: any) => {
         console.error(error);
         this.loading = false;
       },
       complete: () => {
-
         console.info('complete');
       },
     });
@@ -144,23 +141,6 @@ export class EmployeeListComponent implements OnInit {
       })
     );
   }
-
-  // loadImage(employe: Employe): any {
-  //   const filename = employe.picture;
-  //  let file
-  //   this.apiRhService.fichierDownload(filename).subscribe({
-  //     next: (imageData: any) => {
-  //       employe.profilePhotoFile = imageData;
-  //     },
-  //     error: (error: any) => {
-  //       console.error(`Erreur lors du chargement de l'image pour ${employe.firstName}:`, error);
-  //     }
-  //   });
-
-  //   return
-  // }
-
-  //----------------------------------------------------------------------
 
   async getPP(employe: Employe) {
     //todo: change pour envoyer l image obtenue dans profilePhotoFile ; fais le parcours de la liste des employes
@@ -248,11 +228,11 @@ export class EmployeeListComponent implements OnInit {
     });
   }
 
-
   deleteEmploye(employeeId: string): void {
     this.userService.deleteEmployee(employeeId).subscribe(
       (response) => {
-        // Assuming t
+        console.log('employer suprimer avec success', employeeId);
+
         this.employe = this.employe.filter(
           (user) => user.employeID !== employeeId
         );
@@ -265,41 +245,7 @@ export class EmployeeListComponent implements OnInit {
     );
   }
 
-  // confirmDelete(employeID: string) {
-  //   this.confirmationService.confirm({
-  //     message: 'Êtes-vous sûr de vouloir supprimer cet employé ?',
-  //     header: 'Confirmation',
-  //     icon: 'pi pi-exclamation-triangle',
-  //     accept: () => {
-  //       this.deleteEmploye(employeID);
-  //     },
-  //     reject: () => {
-  //       console.log('Suppression annulée');
-  //     }
-  //   });
-  // }
-
-  // confirmDelete(employeeId: string) {
-  //   this.confirmationService.confirm({
-  //     message: 'Êtes-vous sûr de vouloir supprimer cet employé ?',
-  //     header: 'Confirmation',
-  //     icon: 'pi pi-exclamation-triangle',
-  //     accept: () => {
-  //       // Logique de suppression ici
-  //       this.deleteEmploye(employeeId);
-  //     },
-  //     reject: () => {
-  //       console.log('Suppression annulée');
-  //     },
-  //   });
-  // }
-
-
-
-
-
   // -----------------------------------filtre---------------------------
-
 
   loadOrganisations(): void {
     this.organisationService.getOrganisation().subscribe(
@@ -324,7 +270,11 @@ export class EmployeeListComponent implements OnInit {
   }
 
   onFilterChange() {
-    if (this.selectedOrganisation && this.selectedStructure && this.selectedExercice) {
+    if (
+      this.selectedOrganisation &&
+      this.selectedStructure &&
+      this.selectedExercice
+    ) {
       this.loadEmployees(this.organisationId);
     }
   }
@@ -352,7 +302,6 @@ export class EmployeeListComponent implements OnInit {
         this.loading = false;
       },
       complete: () => {
-
         console.info('complete');
       },
     });
@@ -380,13 +329,9 @@ export class EmployeeListComponent implements OnInit {
       );
   }
 
-
-
   showAlert(): void {
     alert('Aucun utilisateur trouvé pour les critères sélectionnés.');
   }
-
-
 
   navigateToUserList(): void {
     if (
@@ -407,8 +352,4 @@ export class EmployeeListComponent implements OnInit {
       );
     }
   }
-
-
-
-
 }

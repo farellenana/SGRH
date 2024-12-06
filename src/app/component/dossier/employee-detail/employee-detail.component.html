@@ -28,7 +28,7 @@
               employe.profilePhotoFile || 'assets/images/profile2.png'
             " class="img-fluid rounded-circle " alt="Photo de Profil" width="100" />
           <h5 class="card-title"></h5>
-          <h3 class="card-text text-white " >{{ employe.post }}</h3>
+          <h3 class="card-text text-white ">{{ employe.post }}</h3>
         </div>
       </div>
       <div class="card shadow bg-dark text-white">
@@ -71,7 +71,7 @@
       <!-- autre flottant -->
       <div class="card shadow bg-dark text-white mt-3">
         <div class="card-body">
-          <h4 >Informations sur le poste</h4>
+          <h4>Informations sur le poste</h4>
           <table class="table table-dark table-borderless ">
             <tbody>
               <tr>
@@ -84,7 +84,7 @@
               </tr>
               <tr>
                 <th>Date d'embauche :</th>
-                <td>{{ employe.hireDate | date:'d MMMM y'  }}</td>
+                <td>{{ employe.hireDate | date:'d MMMM y' }}</td>
               </tr>
               <tr>
                 <th>Poste actuel</th>
@@ -148,14 +148,14 @@
         </li>
       </ul>
       <br />
-      <div class="tab-content" id="myTabContent" >
+      <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="personal-info" role="tabpanel" aria-labelledby="personal-info-tab">
           <div class="row mb-4">
             <div class="col-md-6 mb-3">
               <div class="card shadow" scrollable="true" scrollHeight="400px">
                 <div class="card-header bg-primary text-light fw-bold">
                   <i class="bi bi-person-circle"></i>
-                   Coordonnées et Contact d'urgence
+                  Coordonnées et Contact d'urgence
                 </div>
 
                 <div class="card-body">
@@ -267,7 +267,7 @@
                 <ng-template pTemplate="body" let-docu>
                   <tr>
                     <td>{{ docu.nom }}</td>
-                    <td>{{ docu.date  | date:'d MMMM y' }}</td>
+                    <td>{{ docu.date | date:'d MMMM y' }}</td>
                     <td>{{ docu.type }}</td>
                     <td>{{ docu.description }}</td>
                     <td>{{ docu.file }}</td>
@@ -306,7 +306,7 @@
                         <td>{{ acad.level }}</td>
                         <td>{{ acad.fieldOfStudy }}</td>
                         <td>{{ acad.institution }}</td>
-                        <td>{{ acad.studyDate | date:'d MMMM y'  }}</td>
+                        <td>{{ acad.studyDate | date:'d MMMM y' }}</td>
                         <td>{{ acad.degreeObtend }}</td>
                         <td>{{ acad.additionnalCertifications }}</td>
                         <td>
@@ -345,7 +345,7 @@
                     <tr>
                       <td>{{ pro.position }}</td>
                       <td>{{ pro.company }}</td>
-                      <td>{{ pro.employmentDate | date:'d MMMM y'  }}</td>
+                      <td>{{ pro.employmentDate | date:'d MMMM y' }}</td>
                       <td>{{ pro.responsabilitiesDescription }}</td>
                       <td>{{ pro.keyArchivement }}</td>
                       <td>
@@ -520,17 +520,17 @@
         <div class="tab-pane fade" id="congés-info" role="tabpanel" aria-labelledby="congés-info-tab">
           <div class="row  mb-4">
             <div class="col-md-12 mb-3">
-            <div class="card shadow">
-              <div class="card-header bg-primary text-light fw-bold">
-                <i class="bi bi-calendar-check"></i> conges
+              <div class="card shadow">
+                <div class="card-header bg-primary text-light fw-bold">
+                  <i class="bi bi-calendar-check"></i> conges
+                </div>
+                <p class="p-3">
+                  • Historique des promotions
+                  • Historique des mutations
+                  • Plan de carrière
+                </p>
               </div>
-            <p class="p-3">
-              • Historique des promotions
-              • Historique des mutations
-              • Plan de carrière
-            </p>
-          </div>
-        </div>
+            </div>
           </div>
         </div>
 
@@ -581,23 +581,23 @@
                       </li>
                     </ul>
                   </div>
-                  
+
                 </div>
               </div>
             </div>
           </div>
         </div>
-         <!-- assurance -->
-         <div class="tab-pane fade" id="assurance-info" role="tabpanel" aria-labelledby="assurance-info-tab">
+        <!-- assurance -->
+        <div class="tab-pane fade" id="assurance-info" role="tabpanel" aria-labelledby="assurance-info-tab">
           <div class="row  mb-4">
             <div class="col-md-12 mb-3">
-            <div class="card shadow">
-              <div class="card-header bg-primary text-light fw-bold">
-                <i class="bi bi-shield-check"></i> Assurance
+              <div class="card shadow">
+                <div class="card-header bg-primary text-light fw-bold">
+                  <i class="bi bi-shield-check"></i> Assurance
+                </div>
+                <h5 class="p-2">Listes des assurance</h5>
               </div>
-              <h5 class="p-2">Listes des assurance</h5>
-          </div>
-        </div>
+            </div>
           </div>
         </div>
       </div>
